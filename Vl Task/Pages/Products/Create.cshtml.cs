@@ -12,9 +12,9 @@ namespace Vl_Task.Pages.Products
 {
     public class CreateModel : PageModel
     {
-        private readonly Vl_Task.Data.WarehouseContext _context;
+        private readonly WarehouseContext _context;
 
-        public CreateModel(Vl_Task.Data.WarehouseContext context)
+        public CreateModel(WarehouseContext context)
         {
             _context = context;
         }
@@ -27,15 +27,12 @@ namespace Vl_Task.Pages.Products
         [BindProperty]
         public Product Product { get; set; }
         
-
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
           if (!ModelState.IsValid)
             {
                 return Page();
             }
-
             _context.Product.Add(Product);
             await _context.SaveChangesAsync();
 
