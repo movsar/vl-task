@@ -165,7 +165,7 @@ RETURN
 		pv.Length AS Length, pv.Height AS Height
 	FROM ProductVersion pv
 	INNER JOIN Product p ON pv.ProductID = p.ID
-	WHERE (p.Name LIKE '%' + @productName + '%' AND @productName <> '') or @productName = ''
-		AND (p.Name LIKE '%' + @productVersionName + '%' AND @productVersionName <> '') or @productVersionName = ''
-		AND (@productMinVolume <> 0 AND @productMinVolume <= (pv.Height * pv.Width * pv.Length)) or @productMinVolume = 0
-		AND (@productMaxVolume <> 0 AND @productMaxVolume >= (pv.Height * pv.Width * pv.Length)) or @productMaxVolume = 0
+	WHERE (( @productName <> '' AND p.Name LIKE '%' + @productName + '%') or @productName = '')
+		AND ((@productVersionName <> '' AND pv.Name LIKE '%' + @productVersionName + '%') or @productVersionName = '')
+		AND ((@productMinVolume <> 0 AND @productMinVolume <= (pv.Height * pv.Width * pv.Length)) or @productMinVolume = 0)
+		AND ((@productMaxVolume <> 0 AND @productMaxVolume >= (pv.Height * pv.Width * pv.Length)) or @productMaxVolume = 0)
