@@ -155,8 +155,8 @@ GO
 CREATE FUNCTION ProductVersion_Search_Func (
 	@productName varchar(100),
 	@productVersionName varchar(100),
-	@productMinVolume int,
-	@productMaxVolume int
+	@productMinVolume real,
+	@productMaxVolume real
 )
 RETURNS TABLE AS
 RETURN
@@ -165,7 +165,7 @@ RETURN
 		pv.Length AS Length, pv.Height AS Height
 	FROM ProductVersion pv
 	INNER JOIN Product p ON pv.ProductID = p.ID
-	WHERE p.Name LIKE '%' + @productName + '%'
-		AND pv.Name LIKE '%' + @productVersionName + '%'
-		AND @productMinVolume <= (pv.Height * pv.Width * pv.Length)
-		AND @productMaxVolume >= (pv.Height * pv.Width * pv.Length)
+	WHERE (p.Name LIKE '%' + @productName + '%' AND @productName <> '') or @productName = ''
+		AND (p.Name LIKE '%' + @productVersionName + '%' AND @productVersionName <> '') or @productVersionName = ''
+		AND (@productMinVolume <> 0 AND @productMinVolume <= (pv.Height * pv.Width * pv.Length)) or @productMinVolume = 0
+		AND (@productMaxVolume <> 0 AND @productMaxVolume >= (pv.Height * pv.Width * pv.Length)) or @productMaxVolume = 0

@@ -36,7 +36,7 @@ namespace Vl_Task.Pages.ProductVersions
                 return Page();
             }
 
-            _context.ProductVersion.Add(ProductVersion);
+            _context.ProductVersions.Add(ProductVersion);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

@@ -25,12 +25,12 @@ namespace Vl_Task.Pages.Products
 
         public async Task<IActionResult> OnGetAsync(Guid id)
         {
-            if (id == null || _context.Product == null)
+            if (id == null || _context.Products == null)
             {
                 return NotFound();
             }
 
-            var product =  await _context.Product.FirstOrDefaultAsync(m => m.Id == id);
+            var product =  await _context.Products.FirstOrDefaultAsync(m => m.Id == id);
             if (product == null)
             {
                 return NotFound();
@@ -71,7 +71,7 @@ namespace Vl_Task.Pages.Products
 
         private bool ProductExists(Guid id)
         {
-          return _context.Product.Any(e => e.Id == id);
+          return _context.Products.Any(e => e.Id == id);
         }
     }
 }

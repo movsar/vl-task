@@ -23,9 +23,9 @@ namespace Vl_Task.Pages.ProductVersions
 
         public async Task OnGetAsync()
         {
-            if (_context.ProductVersion != null)
+            if (_context.ProductVersions != null)
             {
-                ProductVersion = await _context.ProductVersion.ToListAsync();
+                ProductVersion = await _context.ProductVersions.ToListAsync();
             }
         }
     }

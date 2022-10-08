@@ -24,12 +24,12 @@ namespace Vl_Task.Pages.ProductVersions
 
         public async Task<IActionResult> OnGetAsync(Guid? id)
         {
-            if (id == null || _context.ProductVersion == null)
+            if (id == null || _context.ProductVersions == null)
             {
                 return NotFound();
             }
 
-            var productversion = await _context.ProductVersion.FirstOrDefaultAsync(m => m.Id == id);
+            var productversion = await _context.ProductVersions.FirstOrDefaultAsync(m => m.Id == id);
 
             if (productversion == null)
             {
@@ -44,16 +44,16 @@ namespace Vl_Task.Pages.ProductVersions
 
         public async Task<IActionResult> OnPostAsync(Guid? id)
         {
-            if (id == null || _context.ProductVersion == null)
+            if (id == null || _context.ProductVersions == null)
             {
                 return NotFound();
             }
-            var productversion = await _context.ProductVersion.FindAsync(id);
+            var productversion = await _context.ProductVersions.FindAsync(id);
 
             if (productversion != null)
             {
                 ProductVersion = productversion;
-                _context.ProductVersion.Remove(ProductVersion);
+                _context.ProductVersions.Remove(ProductVersion);
                 await _context.SaveChangesAsync();
             }
 
