@@ -1,0 +1,65 @@
+﻿@page
+@model Vl_Task.Pages.ProductVersions.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>ProductVersion</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ProductVersion.Id" />
+            <div class="form-group">
+                <label asp-for="ProductVersion.ProductId" class="control-label"></label>
+                <input asp-for="ProductVersion.ProductId" class="form-control" />
+                <span asp-validation-for="ProductVersion.ProductId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductVersion.Name" class="control-label"></label>
+                <input asp-for="ProductVersion.Name" class="form-control" />
+                <span asp-validation-for="ProductVersion.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductVersion.Description" class="control-label"></label>
+                <input asp-for="ProductVersion.Description" class="form-control" />
+                <span asp-validation-for="ProductVersion.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductVersion.CreatedDate" class="control-label"></label>
+                <input asp-for="ProductVersion.CreatedDate" class="form-control" />
+                <span asp-validation-for="ProductVersion.CreatedDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductVersion.Width" class="control-label"></label>
+                <input asp-for="ProductVersion.Width" class="form-control" />
+                <span asp-validation-for="ProductVersion.Width" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductVersion.Height" class="control-label"></label>
+                <input asp-for="ProductVersion.Height" class="form-control" />
+                <span asp-validation-for="ProductVersion.Height" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductVersion.Length" class="control-label"></label>
+                <input asp-for="ProductVersion.Length" class="form-control" />
+                <span asp-validation-for="ProductVersion.Length" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

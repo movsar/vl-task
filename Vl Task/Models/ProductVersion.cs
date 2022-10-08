@@ -8,14 +8,14 @@ namespace Vl_Task.Models {
         public Guid ProductId { get; set; }
         [Required]
         public string Name { get; set; }
-        public string Description { get; set; }
+        public string? Description { get; set; }
         [Required]
         public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
         [Required]
-        public int Width { get; set; }
+        public float Width { get; set; }
         [Required]
-        public int Height { get; set; }
+        public float Height { get; set; }
         [Required]
-        public int Length { get; set; }
+        public float Length { get; set; }
     }
 }
