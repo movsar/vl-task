@@ -2,21 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Data;
+using Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using Vl_Task.Data;
-using Vl_Task.Models;
 
 namespace Vl_Task.Pages.ProductVersions
 {
     public class DeleteModel : PageModel
     {
-        private readonly Vl_Task.Data.WarehouseContext _context;
-
-        public DeleteModel(Vl_Task.Data.WarehouseContext context)
-        {
-            _context = context;
+        private readonly Storage _storage;
+        public DeleteModel(Storage storage) {
+            _storage = storage;
         }
 
         [BindProperty]
@@ -24,12 +22,12 @@ namespace Vl_Task.Pages.ProductVersions
 
         public async Task<IActionResult> OnGetAsync(Guid? id)
         {
-            if (id == null || _context.ProductVersions == null)
+            if (id == null || _storage.ProductVersions == null)
             {
                 return NotFound();
             }
 
-            var productversion = await _context.ProductVersions.FirstOrDefaultAsync(m => m.Id == id);
+            var productversion = await _storage.ProductVersions.Get(id);
 
             if (productversion == null)
             {
@@ -44,17 +42,16 @@ namespace Vl_Task.Pages.ProductVersions
 
         public async Task<IActionResult> OnPostAsync(Guid? id)
         {
-            if (id == null || _context.ProductVersions == null)
+            if (id == null)
             {
                 return NotFound();
             }
-            var productversion = await _context.ProductVersions.FindAsync(id);
+            var productversion = await _storage.ProductVersions.Get(id);
 
             if (productversion != null)
             {
                 ProductVersion = productversion;
-                _context.ProductVersions.Remove(ProductVersion);
-                await _context.SaveChangesAsync();
+                await _storage.ProductVersions.Remove(ProductVersion);
             }
 
             return RedirectToPage("./Index");

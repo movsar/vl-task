@@ -2,21 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Data;
+using Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Vl_Task.Data;
-using Vl_Task.Models;
 
 namespace Vl_Task.Pages.ProductVersions
 {
     public class CreateModel : PageModel
     {
-        private readonly Vl_Task.Data.WarehouseContext _context;
-
-        public CreateModel(Vl_Task.Data.WarehouseContext context)
-        {
-            _context = context;
+        private readonly Storage _storage;
+        public CreateModel(Storage storage) {
+            _storage = storage;
         }
 
         public IActionResult OnGet()
@@ -36,8 +34,8 @@ namespace Vl_Task.Pages.ProductVersions
                 return Page();
             }
 
-            _context.ProductVersions.Add(ProductVersion);
-            await _context.SaveChangesAsync();
+            _storage.ProductVersions.Add(ProductVersion);
+            await _storage.SaveChangesAsync();
 
             return RedirectToPage("./Index");
         }

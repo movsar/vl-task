@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Data.Models;
 using Microsoft.EntityFrameworkCore;
-using Vl_Task.Models;
 
-namespace Vl_Task.Data {
+namespace Data {
     public class WarehouseContext : DbContext {
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductVersion> ProductVersions { get; set; }

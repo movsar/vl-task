@@ -1,7 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Data.Interfaces;
+using System.ComponentModel.DataAnnotations;
 
-namespace Vl_Task.Models {
-    public class ProductVersion {
+namespace Data.Models {
+    public class ProductVersion : DbModelBase {
         [Required]
         public Guid Id { get; set; }
         [Required]

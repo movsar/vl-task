@@ -1,4 +1,4 @@
-﻿namespace Vl_Task.Models {
+﻿namespace Data.Models {
     public class ProductVersionSearchResult {
         public Guid ProductVersionID { get; set; }
         public string ProductName { get; set; }

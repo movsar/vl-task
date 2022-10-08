@@ -2,59 +2,45 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Data;
+using Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using Vl_Task.Data;
-using Vl_Task.Models;
 
-namespace Vl_Task.Pages.Products
-{
-    public class DeleteModel : PageModel
-    {
-        private readonly Vl_Task.Data.WarehouseContext _context;
-
-        public DeleteModel(Vl_Task.Data.WarehouseContext context)
-        {
-            _context = context;
+namespace Vl_Task.Pages.Products {
+    public class DeleteModel : PageModel {
+        private readonly Storage _storage;
+        public DeleteModel(Storage storage) {
+            _storage = storage;
         }
-
         [BindProperty]
-      public Product Product { get; set; }
+        public Product Product { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(Guid id)
-        {
-            if (id == null || _context.Products == null)
-            {
+        public async Task<IActionResult> OnGetAsync(Guid? id) {
+            if (id == null) {
                 return NotFound();
             }
 
-            var product = await _context.Products.FirstOrDefaultAsync(m => m.Id == id);
+            var product = await _storage.Products.Get(id);
 
-            if (product == null)
-            {
+            if (product == null) {
                 return NotFound();
-            }
-            else 
-            {
+            } else {
                 Product = product;
             }
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(Guid id)
-        {
-            if (id == null || _context.Products == null)
-            {
+        public async Task<IActionResult> OnPostAsync(Guid? id) {
+            if (id == null || _storage.Products == null) {
                 return NotFound();
             }
-            var product = await _context.Products.FindAsync(id);
+            var product = await _storage.Products.Get(id);
 
-            if (product != null)
-            {
+            if (product != null) {
                 Product = product;
-                _context.Products.Remove(Product);
-                await _context.SaveChangesAsync();
+                await _storage.Products.Remove(Product);
             }
 
             return RedirectToPage("./Index");

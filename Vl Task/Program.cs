@@ -1,15 +1,14 @@
+using Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Vl_Task.Data;
 namespace Vl_Task {
     public class Program {
         public static void Main(string[] args) {
             var builder = WebApplication.CreateBuilder(args);
-            builder.Services.AddDbContext<WarehouseContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("WarehouseContext") ?? throw new InvalidOperationException("Connection string 'WarehouseContext' not found.")));
-            builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+            builder.Services.RegisterServices();
             // Add services to the container.
             builder.Services.AddRazorPages();
+            builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
             var app = builder.Build();
 

@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vl Task", "Vl Task\Vl Task.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestService", "RestService\RestService.csproj", "{54C6EB94-C7D6-4D9D-ADBA-1EA155030C32}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{C3DD1947-8DCD-4488-9DC3-EBEC21597A80}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{54C6EB94-C7D6-4D9D-ADBA-1EA155030C32}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{54C6EB94-C7D6-4D9D-ADBA-1EA155030C32}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{54C6EB94-C7D6-4D9D-ADBA-1EA155030C32}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3DD1947-8DCD-4488-9DC3-EBEC21597A80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3DD1947-8DCD-4488-9DC3-EBEC21597A80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3DD1947-8DCD-4488-9DC3-EBEC21597A80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3DD1947-8DCD-4488-9DC3-EBEC21597A80}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
