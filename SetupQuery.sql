@@ -1,13 +1,15 @@
 USE master
 
+-- Remove existing database
 DROP DATABASE TestDb
 GO
 
-IF NOT EXISTS (SELECT 1 FROM sys.databases WHERE [name] = N'TestDb')
+-- Create database
 CREATE DATABASE TestDb
 GO
 
 USE TestDb
+-- Product table
 IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE [name] = N'Product')
 CREATE TABLE Product 
 (
@@ -19,6 +21,7 @@ CREATE TABLE Product
 	INDEX IX_Product_Name NONCLUSTERED (Name ASC) WITH (ALLOW_ROW_LOCKS = ON, ALLOW_ROW_LOCKS = ON)
 )
 
+-- ProductVersion table
 IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE [name] = N'ProductVersion')
 CREATE TABLE ProductVersion 
 (
@@ -38,6 +41,7 @@ CREATE TABLE ProductVersion
 	INDEX IX_ProductVersion_Length NONCLUSTERED (Length ASC) WITH (ALLOW_ROW_LOCKS = ON, ALLOW_ROW_LOCKS = ON)
 )
 
+-- EventLog table
 IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE [name] = N'EventLog')
 CREATE TABLE EventLog 
 (
@@ -48,16 +52,24 @@ CREATE TABLE EventLog
 CREATE NONCLUSTERED INDEX IX_EventLog_EventDate ON TestDb.dbo.EventLog(EventDate ASC) WITH (ALLOW_ROW_LOCKS = ON, ALLOW_ROW_LOCKS = ON);
 GO
 
+--Triggers for Product table
 CREATE TRIGGER TR_Product_Insert ON Product
 FOR INSERT AS
 BEGIN
+	DECLARE @affectedProductNames varchar(1000)
+	SET @affectedProductNames = ''
+	SELECT @affectedProductNames = @affectedProductNames + Name + ', '
+	FROM Inserted
+
+	SET @affectedProductNames = SUBSTRING(@affectedProductNames, 1, LEN(@affectedProductNames) - 1) 
+
     INSERT INTO EventLog(
         [EventDate],
         [Description]
     )
     VALUES(
         getDate(),
-		CONCAT('Inserted ', (SELECT Count(*) FROM Inserted), ' row(s)')
+		CONCAT('Product - Inserted ', (SELECT Count(*) FROM Inserted), ' row(s) with Names: ', @affectedProductNames)
     );
 END
 GO
@@ -71,7 +83,7 @@ BEGIN
     )
     VALUES(
         getDate(),
-		CONCAT('Updated ', (SELECT Count(*) FROM Inserted), ' row(s)')
+		CONCAT('Product - Updated ', (SELECT Count(*) FROM Inserted), ' row(s)')
     );
 END
 GO
@@ -85,22 +97,29 @@ BEGIN
     )
     VALUES(
         getDate(),
-		CONCAT('Deleted ', (SELECT Count(*) FROM Deleted), ' row(s)')
+		CONCAT('Product - Deleted ', (SELECT Count(*) FROM Deleted), ' row(s)')
     );
 END
 GO 
 
-
+--Triggers for ProductVersion table
 CREATE TRIGGER TR_ProductVersion_Insert ON ProductVersion
 FOR INSERT AS
 BEGIN
+  	DECLARE @affectedProductVersionNames varchar(1000)
+	SET @affectedProductVersionNames = ''
+	SELECT @affectedProductVersionNames = @affectedProductVersionNames + Name + ', '
+	FROM Inserted
+
+	SET @affectedProductVersionNames = SUBSTRING(@affectedProductVersionNames, 1, LEN(@affectedProductVersionNames) - 1) 
+
     INSERT INTO EventLog(
         [EventDate],
         [Description]
     )
     VALUES(
         getDate(),
-		CONCAT('Inserted ', (SELECT Count(*) FROM Inserted), ' row(s)')
+		CONCAT('ProductVersion - Inserted ', (SELECT Count(*) FROM Inserted), ' row(s) with Names: ', @affectedProductVersionNames)
     );
 END
 GO
@@ -114,7 +133,7 @@ BEGIN
     )
     VALUES(
         getDate(),
-		CONCAT('Updated ', (SELECT Count(*) FROM Inserted), ' row(s)')
+		CONCAT('ProductVersion - Updated ', (SELECT Count(*) FROM Inserted), ' row(s)')
     );
 END
 GO
@@ -128,6 +147,25 @@ BEGIN
     )
     VALUES(
         getDate(),
-		CONCAT('Deleted ', (SELECT Count(*) FROM Deleted), ' row(s)')
+		CONCAT('ProductVersion - Deleted ', (SELECT Count(*) FROM Deleted), ' row(s)')
     );
 END
+GO
+
+CREATE FUNCTION ProductVersion_Search_Func (
+	@productName varchar(100),
+	@productVersionName varchar(100),
+	@productMinVolume int,
+	@productMaxVolume int
+)
+RETURNS TABLE AS
+RETURN
+	SELECT pv.ID AS ProductVersionID, p.Name AS ProductName, 
+		pv.Name AS ProductVersionName, pv.Width AS Width, 
+		pv.Length AS Length, pv.Height AS Height
+	FROM ProductVersion pv
+	INNER JOIN Product p ON pv.ProductID = p.ID
+	WHERE p.Name LIKE '%' + @productName + '%'
+		AND pv.Name LIKE '%' + @productVersionName + '%'
+		AND @productMinVolume <= (pv.Height * pv.Width * pv.Length)
+		AND @productMaxVolume >= (pv.Height * pv.Width * pv.Length)
