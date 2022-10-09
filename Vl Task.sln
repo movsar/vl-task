@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32901.215
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vl Task", "Vl Task\Vl Task.csproj", "{AC45D660-C37C-4B76-B4E7-88F6DE962E8D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApp", "Vl Task\WebApp.csproj", "{AC45D660-C37C-4B76-B4E7-88F6DE962E8D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestService", "RestService\RestService.csproj", "{54C6EB94-C7D6-4D9D-ADBA-1EA155030C32}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestService", "RestService\RestService.csproj", "{54C6EB94-C7D6-4D9D-ADBA-1EA155030C32}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{C3DD1947-8DCD-4488-9DC3-EBEC21597A80}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "Data\Data.csproj", "{C3DD1947-8DCD-4488-9DC3-EBEC21597A80}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

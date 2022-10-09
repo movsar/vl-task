@@ -14,6 +14,13 @@ namespace Data.Repositories {
             _context = context;
         }
 
+        public IQueryable<ProductVersionSearchResult> Search(string productName, string productVersionName, float minVolume, float maxVolume) {
+            string query = $"SELECT * FROM [dbo].[ProductVersion_Search_Func] ('{productName}', '{productVersionName}', {minVolume}, {maxVolume})";
+            
+            return _context.ProductVersionSearchResult.FromSqlRaw(query);
+        }
+
+
 
         public async Task Add(ProductVersion ProductVersion) {
             _context.ProductVersions.Add(ProductVersion);

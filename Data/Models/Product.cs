@@ -1,8 +1,7 @@
-﻿using Data.Interfaces;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Data.Models {
-    public class Product : DbModelBase {
+    public class Product {
         [Required]
         public Guid Id { get; set; }
         [Required]

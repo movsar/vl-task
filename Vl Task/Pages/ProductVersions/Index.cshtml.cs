@@ -27,8 +27,7 @@ namespace Vl_Task.Pages.ProductVersions {
             var maxVolumeAsString = float.TryParse(Request.Form["maxVolume"], out float maxVolume);
 
             string query = $"SELECT * FROM [dbo].[ProductVersion_Search_Func] ('{productName}', '{productVersionName}', {minVolume}, {maxVolume})";
-            var productVersionNames = _storage.ProductVersionSearchResult.FromSqlRaw(query).Select(p => p.ProductVersionName);
-
+            var productVersionNames = _storage.ProductVersions.Search(productName, productVersionName, minVolume, maxVolume).Select(p => p.ProductVersionName);
             ProductVersions = await _storage.ProductVersions.GetByNames(productVersionNames);
         }
     }
