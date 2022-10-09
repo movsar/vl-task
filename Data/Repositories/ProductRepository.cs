@@ -47,5 +47,9 @@ namespace Data.Repositories {
         public async Task<List<Product>> ToListAsync() {
             return await _context.Products.ToListAsync();
         }
+
+        public IEnumerable<Product> GetAll() {
+            return  _context.Products;
+        }
     }
 }

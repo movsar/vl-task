@@ -16,16 +16,15 @@ namespace Data.Repositories {
 
         public IQueryable<ProductVersionSearchResult> Search(string productName, string productVersionName, float minVolume, float maxVolume) {
             string query = $"SELECT * FROM [dbo].[ProductVersion_Search_Func] ('{productName}', '{productVersionName}', {minVolume}, {maxVolume})";
-            
+
             return _context.ProductVersionSearchResult.FromSqlRaw(query);
         }
-
-
 
         public async Task Add(ProductVersion ProductVersion) {
             _context.ProductVersions.Add(ProductVersion);
             await _context.SaveChangesAsync();
         }
+
         public async Task<ProductVersion> Get(Guid? id) {
             return await _context.ProductVersions.FirstOrDefaultAsync(p => p.Id == id);
         }
@@ -58,6 +57,10 @@ namespace Data.Repositories {
 
         public async Task<IList<ProductVersion>> GetByNames(IQueryable<string> productVersionNames) {
             return await _context.ProductVersions.Where(pv => productVersionNames.Contains(pv.Name)).ToListAsync();
+        }
+
+        public IEnumerable<ProductVersion> GetAll() {
+            return _context.ProductVersions;
         }
     }
 }
