@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
-namespace Vl_Task.Pages.Products {
+namespace WebApp.Pages.Products {
     public class DeleteModel : PageModel {
         private readonly Storage _storage;
         public DeleteModel(Storage storage) {

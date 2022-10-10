@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
-namespace Vl_Task.Pages.ProductVersions {
+namespace WebApp.Pages.ProductVersions {
     public class IndexModel : PageModel {
         private readonly Storage _storage;
         public IndexModel(Storage storage) {

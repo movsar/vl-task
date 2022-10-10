@@ -8,7 +8,7 @@
     }
   },
   "profiles": {
-    "Vl_Task": {
+    "WebApp": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

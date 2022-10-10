@@ -6,8 +6,10 @@ using Data;
 using Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
-namespace Vl_Task.Pages.ProductVersions
+namespace WebApp.Pages.Products
 {
     public class EditModel : PageModel
     {
@@ -16,7 +18,7 @@ namespace Vl_Task.Pages.ProductVersions
             _storage = storage;
         }
         [BindProperty]
-        public ProductVersion ProductVersion { get; set; } = default!;
+        public Product Product { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(Guid? id)
         {
@@ -25,17 +27,15 @@ namespace Vl_Task.Pages.ProductVersions
                 return NotFound();
             }
 
-            var productversion =  await _storage.ProductVersions.Get(id);
-            if (productversion == null)
+            var product = _storage.Products.Get(id);
+            if (product == null)
             {
                 return NotFound();
             }
-            ProductVersion = productversion;
+            Product = await product;
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -43,13 +43,14 @@ namespace Vl_Task.Pages.ProductVersions
                 return Page();
             }
 
-            await _storage.ProductVersions.Update(ProductVersion);
+            await _storage.Products.Update(Product);
+
             return RedirectToPage("./Index");
         }
 
-        private bool ProductVersionExists(Guid id)
+        private bool ProductExists(Guid id)
         {
-          return _storage.ProductVersions.Exists(id);
+          return _storage.Products.Exists(id);
         }
     }
 }

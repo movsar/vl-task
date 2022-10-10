@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
-namespace Vl_Task.Pages.Products
+namespace WebApp.Pages.Products
 {
     public class DetailsModel : PageModel
     {

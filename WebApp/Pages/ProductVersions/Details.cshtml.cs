@@ -8,17 +8,16 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
-namespace Vl_Task.Pages.ProductVersions
+namespace WebApp.Pages.ProductVersions
 {
-    public class DeleteModel : PageModel
+    public class DetailsModel : PageModel
     {
         private readonly Storage _storage;
-        public DeleteModel(Storage storage) {
+        public DetailsModel(Storage storage) {
             _storage = storage;
         }
 
-        [BindProperty]
-      public ProductVersion ProductVersion { get; set; }
+        public ProductVersion ProductVersion { get; set; }
 
         public async Task<IActionResult> OnGetAsync(Guid? id)
         {
@@ -28,7 +27,6 @@ namespace Vl_Task.Pages.ProductVersions
             }
 
             var productversion = await _storage.ProductVersions.Get(id);
-
             if (productversion == null)
             {
                 return NotFound();
@@ -38,23 +36,6 @@ namespace Vl_Task.Pages.ProductVersions
                 ProductVersion = productversion;
             }
             return Page();
-        }
-
-        public async Task<IActionResult> OnPostAsync(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            var productversion = await _storage.ProductVersions.Get(id);
-
-            if (productversion != null)
-            {
-                ProductVersion = productversion;
-                await _storage.ProductVersions.Remove(ProductVersion);
-            }
-
-            return RedirectToPage("./Index");
         }
     }
 }

@@ -6,14 +6,14 @@ using Data;
 using Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace Vl_Task.Pages.ProductVersions
+namespace WebApp.Pages.Products
 {
     public class CreateModel : PageModel
     {
         private readonly Storage _storage;
-        public CreateModel(Storage storage) {
+        public CreateModel(Storage storage)
+        {
             _storage = storage;
         }
 
@@ -23,19 +23,15 @@ namespace Vl_Task.Pages.ProductVersions
         }
 
         [BindProperty]
-        public ProductVersion ProductVersion { get; set; }
+        public Product Product { get; set; }
         
-
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
           if (!ModelState.IsValid)
             {
                 return Page();
             }
-
-            _storage.ProductVersions.Add(ProductVersion);
-            await _storage.SaveChangesAsync();
+            await _storage.Products.Add(Product);
 
             return RedirectToPage("./Index");
         }
