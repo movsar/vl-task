@@ -12,7 +12,7 @@ namespace Data {
     public static class ServiceCollectionExtensions {
 
         public static void RegisterServices(this IServiceCollection services) {
-            var connectionString = Constants.localConnectionString;
+            var connectionString = Constants.connectionString;
 
             services.AddDbContext<WarehouseContext>(options => options.UseSqlServer(connectionString ?? throw new InvalidOperationException("Connection string 'WarehouseContext' not found.")));
             services.AddScoped<ProductRepository>();

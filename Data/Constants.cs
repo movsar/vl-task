@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace Data {
     internal static class Constants {
+        private const string localDbName = "TestDb";
         private const string localServerName = "DESKTOP-BODQELM";
-        public const string localConnectionString = $"Data Source={localServerName};Database=TestDb;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-        public const string remoteConnectionString = "";
+        private const string localUserName = "TestDb";
+        private const string localPassword = "";
+
+        public const string connectionString = $"Data Source={localServerName};Database={localDbName};User={localUserName};Pwd={localPassword};Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
     }
 }
