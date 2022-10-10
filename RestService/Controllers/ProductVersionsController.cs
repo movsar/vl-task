@@ -5,10 +5,10 @@ using Microsoft.AspNetCore.Mvc;
 namespace RestService.Controllers {
     [ApiController]
     [Route("[controller]")]
-    public class ProductVersionController : Controller {
+    public class ProductVersionsController : Controller {
         private Storage _storage;
 
-        public ProductVersionController(Storage storage) {
+        public ProductVersionsController(Storage storage) {
             _storage = storage;
         }
         [HttpGet]
