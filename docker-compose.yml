@@ -1,0 +1,16 @@
+version: '3.4'
+
+services:
+  webapp:
+    image: ${DOCKER_REGISTRY-}webapp
+    build:
+      context: .
+      dockerfile: WebApp/Dockerfile
+  sql:
+    image: "2022-latest"
+    build:
+      no_cache: true
+      context: .
+      dockerfile: Data/Docker/Dockerfile
+    ports:
+      - "1645:1645"

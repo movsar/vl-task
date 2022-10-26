@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Data.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace Data {
     public class WarehouseContext : DbContext {
@@ -17,6 +18,13 @@ namespace Data {
             modelBuilder.Entity<ProductVersionSearchResult>().HasNoKey();
         }
         public WarehouseContext(DbContextOptions<WarehouseContext> options): base(options) {}
+        public static string GetCurrentConnectionString()
+        {
+            var config = new ConfigurationBuilder()
+                                  .AddJsonFile("settings.json", optional: false)
+                                  .Build();
 
+            return config.GetSection("ConnectionString").Value;
+        }
     }
 }

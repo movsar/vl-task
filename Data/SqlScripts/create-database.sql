@@ -1,14 +1,11 @@
 USE master
-
--- Remove existing database
-DROP DATABASE TestDb
 GO
 
 -- Create database
-CREATE DATABASE TestDb
+CREATE DATABASE Products
 GO
 
-USE TestDb
+USE Products
 -- Product table
 IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE [name] = N'Product')
 CREATE TABLE Product 
@@ -49,7 +46,7 @@ CREATE TABLE EventLog
 	[EventDate] smalldatetime NOT NULL DEFAULT getDate(),
 	[Description] nvarchar(max),
 )
-CREATE NONCLUSTERED INDEX IX_EventLog_EventDate ON TestDb.dbo.EventLog(EventDate ASC) WITH (ALLOW_ROW_LOCKS = ON, ALLOW_ROW_LOCKS = ON);
+CREATE NONCLUSTERED INDEX IX_EventLog_EventDate ON Products.dbo.EventLog(EventDate ASC) WITH (ALLOW_ROW_LOCKS = ON, ALLOW_ROW_LOCKS = ON);
 GO
 
 --Triggers for Product table
@@ -168,4 +165,31 @@ RETURN
 	WHERE (( @productName <> '' AND p.Name LIKE '%' + @productName + '%') or @productName = '')
 		AND ((@productVersionName <> '' AND pv.Name LIKE '%' + @productVersionName + '%') or @productVersionName = '')
 		AND ((@productMinVolume <> 0 AND @productMinVolume <= (pv.Height * pv.Width * pv.Length)) or @productMinVolume = 0)
-		AND ((@productMaxVolume <> 0 AND @productMaxVolume >= (pv.Height * pv.Width * pv.Length)) or @productMaxVolume = 0)
+		AND ((@productMaxVolume <> 0 AND @productMaxVolume >= (pv.Height * pv.Width * pv.Length)) or @productMaxVolume = 0);
+GO
+
+USE Products
+
+insert into Product (Name) 
+values ('xps'), ('dell latitude'), ('macbook pro'), ('macbook air')
+
+insert into ProductVersion (ProductID, Name, CreatedDate, Width, Height, Length) 
+values ((select ID from Product WHERE Name = 'xps'), '9500', getDate(), 199, 211, 100); 
+
+insert into ProductVersion (ProductID, Name, CreatedDate, Width, Height, Length) 
+values ((select ID from Product WHERE Name = 'xps'), '9900', getDate(), 220, 231, 150); 
+
+insert into ProductVersion (ProductID, Name, CreatedDate, Width, Height, Length) 
+values ((select ID from Product WHERE Name = 'dell latitude'), 'AA211C', getDate(), 244, 151, 200); 
+
+insert into ProductVersion (ProductID, Name, CreatedDate, Width, Height, Length) 
+values ((select ID from Product WHERE Name = 'macbook pro'), '99822', getDate(), 244, 151, 200); 
+
+insert into ProductVersion (ProductID, Name, CreatedDate, Width, Height, Length) 
+values ((select ID from Product WHERE Name = 'macbook pro'), '11221', getDate(), 244, 151, 200); 
+
+insert into ProductVersion (ProductID, Name, CreatedDate, Width, Height, Length) 
+values ((select ID from Product WHERE Name = 'macbook pro'), '88888', getDate(), 244, 151, 200); 
+
+insert into ProductVersion (ProductID, Name, CreatedDate, Width, Height, Length) 
+values ((select ID from Product WHERE Name = 'macbook air'), 'A7777', getDate(), 180, 140, 150); 
